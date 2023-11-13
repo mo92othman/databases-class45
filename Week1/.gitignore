@@ -1,3 +1,4 @@
-package.json
+# package.json
 package-lock.json
 create-table.js
+meetup.sql
