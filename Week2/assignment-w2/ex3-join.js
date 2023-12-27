@@ -51,7 +51,8 @@ connection.connect((err) => {
       if (error) {
         console.error('Error executing the second query:', error);
       } else {
-        console.log('Authors and their published paper titles:', results);
+        console.log('Authors and their published paper titles:');
+        console.table(results);
       }
 
       // Close the connection

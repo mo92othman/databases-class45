@@ -16,7 +16,7 @@ const createAuthorsTableQuery = `
     university VARCHAR(255),
     date_of_birth DATE,
     h_index INT,
-    gender VARCHAR(1)
+    gender ENUM('M', 'F', 'X')
   );
 `;
 

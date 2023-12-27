@@ -11,11 +11,11 @@ const connection = mysql.createConnection({
 const queries = [
   `SELECT rp.paper_title, COUNT(ap.author_id) AS num_authors FROM research_papers rp LEFT JOIN authors_papers ap ON rp.paper_id = ap.paper_id GROUP BY rp.paper_id;`,
 
-  `SELECT a.gender, SUM(ap.paper_id IS NOT NULL) AS num_papers_published FROM authors a LEFT JOIN authors_papers ap ON a.author_id = ap.author_id GROUP BY a.gender HAVING a.gender = 'F';`,
+  `SELECT a.gender, COUNT(ap.paper_id) AS num_papers_published FROM authors a LEFT JOIN authors_papers ap ON a.author_id = ap.author_id WHERE a.gender = 'F' GROUP BY a.gender;`,
 
   `SELECT university, AVG(h_index) AS avg_h_index FROM authors GROUP BY university;`,
 
-  `SELECT a.university, COUNT(ap.paper_id) AS num_papers FROM authors a LEFT JOIN authors_papers ap ON a.author_id = ap.author_id GROUP BY a.university;`,
+  `SELECT a.university, COUNT(DISTINCT ap.paper_id) AS num_papers FROM authors a LEFT JOIN authors_papers ap ON a.author_id = ap.author_id GROUP BY a.university;`,
 
   `SELECT university, MIN(h_index) AS min_h_index, MAX(h_index) AS max_h_index FROM authors GROUP BY university;`,
 ];
@@ -36,7 +36,8 @@ connection.connect((err) => {
       if (error) {
         console.error('Error executing query:', error);
       } else {
-        console.log('Query results:', results);
+        console.log('Query results:');
+        console.table(results);
       }
     });
   }
